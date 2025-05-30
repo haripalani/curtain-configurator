@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curtain Configurator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <!-- Container 1 - Title and Description -->
+        <div class="container-header">
+            <h1 class="product-heading">OMNIUS - PREMIUM SET GORDIJNEN COMPLEET</h1>
+            <p class="product-description">Upgrade je interieur met deze complete luxe gordijnset, inclusief
+                zijgordijnen, voorraamband, 3-bogen booggordijn en kussen.</p>
+        </div>
+
+        <!-- Container 2 - Configurator -->
+        <div class="configurator-container">
+            <div class="container">
+                <!-- Product Preview Column -->
+                <div class="product-preview">
+                    <div class="preview-image">
+                        <button class="rotation-button left" id="rotate-left">&#10094;</button>
+                        <img src="./Assets/FrontView/Curtain - Original.png" alt="Omnius Premium Gordijnen"
+                            id="preview-main-image">
+                        <button class="rotation-button right" id="rotate-right">&#10095;</button>
+                    </div>
+                    <div class="preview-title" id="product-title">
+                        KLITTENBAND HAAKBAND Yellow - 01 CREME
+                    </div>
+                </div>
+
+                <!-- Options Column -->
+                <div class="options-column">
+                    <!-- Desktop vertical options -->
+                    <div class="option-item active" data-option="haakband">
+                        <img src="./Assets/parts/Tape.jpg" alt="Haakband" class="option-image">
+                        <div class="option-title">KLITTENBAND HAAKBAND Yellow - 225 CM</div>
+                    </div>
+                    <div class="option-item" data-option="zijgordijnen">
+                        <img src="./Assets/parts/OMNIUS KLEUR ZIJGORDIJNEN.webp" alt="Zijgordijnen"
+                            class="option-image">
+                        <div class="option-title">OMNIUS KLEUR ZIJGORDIJNEN</div>
+                    </div>
+                    <div class="option-item" data-option="rand">
+                        <img src="./Assets/parts/KLEUR RAND ZIJGORDIJN.webp" alt="Rand Zijgordijn" class="option-image">
+                        <div class="option-title">KLEUR RAND ZIJGORDIJN</div>
+                    </div>
+                    <div class="option-item" data-option="ophangband">
+                        <img src="./Assets/parts/OMNIUS KLEUR OPHANGBAND.webp" alt="Ophangband" class="option-image">
+                        <div class="option-title">OMNIUS KLEUR OPHANGBAND</div>
+                    </div>
+                    <div class="option-item" data-option="voorraamband">
+                        <img src="./Assets/parts/OMNIUS KLEUR VOORRAAMBAND.webp" alt="Voorraamband"
+                            class="option-image">
+                        <div class="option-title">OMNIUS KLEUR VOORRAAMBAND</div>
+                    </div>
+                    <div class="option-item" data-option="franjes">
+                        <img src="./Assets/parts/OMNIUS FRANJES KLEUR EN LENGTE.webp" alt="Franjes"
+                            class="option-image">
+                        <div class="option-title">OMNIUS FRANJES KLEUR EN LENGTE</div>
+                    </div>
+                    <div class="option-item" data-option="booggordijn">
+                        <img src="./Assets/parts/OMNIUS KLEUR BOOGGORDIJN.webp" alt="Booggordijn" class="option-image">
+                        <div class="option-title">OMNIUS KLEUR BOOGGORDIJN</div>
+                    </div>
+                    <div class="option-item" data-option="kussen-voor">
+                        <img src="./Assets/parts/OMNIUS KUSSEN VOORKANT.webp" alt="Kussen Voorkant"
+                            class="option-image">
+                        <div class="option-title">OMNIUS KUSSEN VOORKANT</div>
+                    </div>
+                    <div class="option-item" data-option="kussen-achter">
+                        <img src="./Assets/parts/OMNIUS KUSSEN ACHTERKANT.webp" alt="Kussen Achterkant"
+                            class="option-image">
+                        <div class="option-title">OMNIUS KUSSEN ACHTERKANT</div>
+                    </div>
+
+                    <!-- Responsive upward dropdown -->
+                    <div class="responsive-selection-dropdown" id="responsive-dropdown">
+                        <div class="selection-title" id="responsive-selection-heading">Select Option</div>
+                        <div id="responsive-selection-content">
+                            <!-- Dynamic content will be inserted here -->
+                        </div>
+                    </div>
+
+                    <!-- Horizontal scrolling options (responsive) -->
+                    <div class="options-scroll-container">
+                        <div class="option-item active" data-option="haakband">
+                            <img src="./Assets/parts/Tape.jpg" alt="Haakband" class="option-image">
+                            <div class="option-title">KLITTENBAND HAAKBAND Yellow - 225 CM</div>
+                        </div>
+                        <div class="option-item" data-option="zijgordijnen">
+                            <img src="./Assets/parts/OMNIUS KLEUR ZIJGORDIJNEN.webp" alt="Zijgordijnen"
+                                class="option-image">
+                            <div class="option-title">OMNIUS KLEUR ZIJGORDIJNEN</div>
+                        </div>
+                        <div class="option-item" data-option="rand">
+                            <img src="./Assets/parts/KLEUR RAND ZIJGORDIJN.webp" alt="Rand Zijgordijn"
+                                class="option-image">
+                            <div class="option-title">KLEUR RAND ZIJGORDIJN</div>
+                        </div>
+                        <div class="option-item" data-option="ophangband">
+                            <img src="./Assets/parts/OMNIUS KLEUR OPHANGBAND.webp" alt="Ophangband"
+                                class="option-image">
+                            <div class="option-title">OMNIUS KLEUR OPHANGBAND</div>
+                        </div>
+                        <div class="option-item" data-option="voorraamband">
+                            <img src="./Assets/parts/OMNIUS KLEUR VOORRAAMBAND.webp" alt="Voorraamband"
+                                class="option-image">
+                            <div class="option-title">OMNIUS KLEUR VOORRAAMBAND</div>
+                        </div>
+                        <div class="option-item" data-option="franjes">
+                            <img src="./Assets/parts/OMNIUS FRANJES KLEUR EN LENGTE.webp" alt="Franjes"
+                                class="option-image">
+                            <div class="option-title">OMNIUS FRANJES KLEUR EN LENGTE</div>
+                        </div>
+                        <div class="option-item" data-option="booggordijn">
+                            <img src="./Assets/parts/OMNIUS KLEUR BOOGGORDIJN.webp" alt="Booggordijn"
+                                class="option-image">
+                            <div class="option-title">OMNIUS KLEUR BOOGGORDIJN</div>
+                        </div>
+                        <div class="option-item" data-option="kussen-voor">
+                            <img src="./Assets/parts/OMNIUS KUSSEN VOORKANT.webp" alt="Kussen Voorkant"
+                                class="option-image">
+                            <div class="option-title">OMNIUS KUSSEN VOORKANT</div>
+                        </div>
+                        <div class="option-item" data-option="kussen-achter">
+                            <img src="./Assets/parts/OMNIUS KUSSEN ACHTERKANT.webp" alt="Kussen Achterkant"
+                                class="option-image">
+                            <div class="option-title">OMNIUS KUSSEN ACHTERKANT</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Selection Column -->
+                <div class="selection-column">
+                    <div class="selection-title" id="selection-heading">KLITTENBAND HAAKBAND Yellow - 225 CM</div>
+
+                    <div id="haakband-options" class="option-panel" style="display: block;">
+                        <div class="fixed-selection">Vaste optie: 225 CM</div>
+                    </div>
+
+                    <div id="zijgordijnen-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="rand-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="ophangband-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="voorraamband-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="franjes-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="booggordijn-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="kussen-voor-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+
+                    <div id="kussen-achter-options" class="option-panel">
+                        <div class="colors-grid">
+                            <!-- Color options will be dynamically inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Container 3 - Price and Cart Section -->
+        <div class="container-footer">
+            <div class="price-cart-section">
+                <div class="price-info">
+                    <div class="product-price">€449,00</div>
+                    <div class="price-details">
+                        <div class="old-price">€493,00</div>
+                        <div class="tax-note">excl. BTW</div>
+                    </div>
+                </div>
+
+                <div class="delivery-info">
+                    <div class="delivery-info-icon">✓</div>
+                    <div>Levertijd: 6 weken</div>
+                </div>
+
+                <div class="cart-controls">
+                    <div class="quantity-controls">
+                        <button class="qty-btn" id="decrease-qty">-</button>
+                        <div class="qty-display" id="qty-value">1</div>
+                        <button class="qty-btn" id="increase-qty">+</button>
+                    </div>
+
+                    <button class="add-to-cart-btn">IN WINKELWAGEN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="curtain-configurator.js"></script>
+</body>
+
+</html>
