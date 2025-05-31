@@ -375,6 +375,11 @@ body {
     background-color: var(--primary-dark);
 }
 
+.mobile-bottom-container{
+    display: none;
+}
+/* Add this to your existing styles.css - Replace the responsive section */
+
 /* Responsive Styles for screens below 1024px */
 @media (max-width: 1023px) {
     .container-header {
@@ -395,199 +400,87 @@ body {
 
     .product-preview {
         flex: 1;
-        border-right: none;
         border-bottom: 1px solid var(--border-color);
         min-height: 0;
     }
 
+    /* ✅ New: Container for bottom sections */
+    .mobile-bottom-container {
+        display: flex;
+        height: 40vh;
+        border-top: 1px solid var(--border-color);
+    }
+
     .selection-column {
-        display: none;
+        display: block;
+        flex: 1; /* ✅ Changed: Take equal width */
+        border-right: 1px solid var(--border-color);
+        border-bottom: none;
+        max-height: none; /* ✅ Removed height limit */
+        overflow-y: auto;
+        order: 2;
     }
 
     .options-column {
         display: flex;
         flex-direction: column;
-        border-right: none;
-        overflow: visible;
+        flex: 1; /* ✅ Changed: Take equal width */
+        overflow-y: auto; /* ✅ FIXED: Changed from 'visible' to 'auto' for vertical scrolling */
         height: auto;
-        flex: none;
         position: relative;
+        order: 1;
     }
 
     .options-column > .option-item {
-        display: none;
-    }
-
-    .options-scroll-container {
-        display: flex;
-        overflow-x: auto;
-        padding: 15px;
-        gap: 10px;
-        background: white;
+        display: flex; /* ✅ Changed: Show vertical options instead of horizontal scroll */
         border-bottom: 1px solid var(--border-color);
-        scrollbar-width: thin;
-        scrollbar-color: var(--primary) transparent;
-    }
-
-    .options-scroll-container::-webkit-scrollbar {
-        height: 6px;
-    }
-
-    .options-scroll-container::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 3px;
-    }
-
-    .options-scroll-container::-webkit-scrollbar-thumb {
-        background: var(--primary);
-        border-radius: 3px;
-    }
-
-    .options-scroll-container .option-item {
-        display: flex;
-        flex: 0 0 auto;
-        min-width: 180px;
-        border: 1px solid var(--border-color);
-        border-radius: 8px;
         margin: 0;
         padding: 12px;
         background: white;
-        transition: var(--transition);
+        flex-shrink: 0; /* ✅ ADDED: Prevent items from shrinking */
     }
 
-    .options-scroll-container .option-item:hover {
+    .options-column > .option-item:hover {
         background-color: rgba(242, 169, 0, 0.05);
     }
 
-    .options-scroll-container .option-item.active {
-        border: 2px solid var(--primary);
+    .options-column > .option-item.active {
+        border-left: 4px solid var(--primary);
         background-color: rgba(242, 169, 0, 0.1);
     }
 
+    /* ✅ Hide horizontal scroll container on mobile */
+    .options-scroll-container {
+        display: none;
+    }
+
+    /* ✅ Hide the upward dropdown completely on mobile */
     .responsive-selection-dropdown {
-        display: block;
-        position: absolute;
-        bottom: 100%;
-        left: 0;
-        right: 0;
-        background: whitesmoke;
-        border: 1px solid var(--border-color);
-        border-bottom: none;
-        border-radius: 8px 8px 0 0;
-        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        transform: translateY(100%);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        max-height: 50vh;
-        overflow-y: auto;
+        display: none !important;
     }
 
-    .responsive-selection-dropdown.show {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
+    /* ✅ Modified: Better mobile layout for colors grid */
+    .selection-column .colors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 12px;
+        margin-top: 12px;
+        padding: 0 5px;
     }
 
-    .responsive-selection-dropdown .selection-title {
-        font-size: 15px;
-        font-weight: 600;
-        margin: 0;
-        padding: 15px 15px 8px;
-        border-bottom: 1px solid var(--border-color);
-        color: var(--text);
+    .selection-column .color-option {
+        aspect-ratio: 1;
+        min-height: 80px;
     }
 
-    /* ✅ Modified: Horizontal scroll layout for colors-grid */
-    .responsive-selection-dropdown .colors-grid {
-        padding: 15px;
-        display: flex;
-        flex-direction: row;
-        gap: 8px;
-        margin-top: 0;
-        overflow-x: auto;
-        scrollbar-width: thin;
-        scrollbar-color: var(--primary) transparent;
+    .selection-column .color-label {
+        font-size: 12px;
+        padding: 2px;
     }
 
-    .responsive-selection-dropdown .colors-grid::-webkit-scrollbar {
-        height: 6px;
-    }
-
-    .responsive-selection-dropdown .colors-grid::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        border-radius: 3px;
-    }
-
-    .responsive-selection-dropdown .colors-grid::-webkit-scrollbar-thumb {
-        background: var(--primary);
-        border-radius: 3px;
-    }
-
-    .responsive-selection-dropdown .color-option {
-        display: flex;
-        align-items: center;
-        padding: 8px 12px;
-        border-radius: 6px;
-        border: 1px solid var(--border-color);
-        background: white;
-        transition: var(--transition);
-        cursor: pointer;
-        flex: 0 0 auto;
-        min-width: 150px;
-    }
-
-    .responsive-selection-dropdown .color-option:hover {
-        background-color: rgba(242, 169, 0, 0.05);
-    }
-
-    .responsive-selection-dropdown .color-option.selected {
-        border-color: var(--primary);
-        background-color: rgba(242, 169, 0, 0.1);
-    }
-
-    .responsive-selection-dropdown .color-option img {
-        width: 24px;
-        height: 24px;
-        object-fit: cover;
-        border-radius: 3px;
-        margin-right: 12px;
-        border: 1px solid var(--border-color);
-    }
-
-    .responsive-selection-dropdown .color-label {
-        position: static;
-        background: none;
-        color: var(--text);
-        font-size: 14px;
-        font-weight: 500;
-        padding: 0;
-        flex: 1;
-    }
-
-    .responsive-selection-dropdown .same-label-color {
-        display: flex;
-        align-items: center;
-        background: none;
-        color: var(--text);
-        font-size: 14px;
-        font-weight: 500;
-        padding: 0;
-        height: auto;
-        width: auto;
-        text-align: left;
-        justify-content: flex-start;
-        flex-direction: row;
-    }
-
-    .responsive-selection-dropdown .fixed-selection {
-        margin: 15px;
-        margin-bottom: 0;
-    }
-
-    .responsive-selection-dropdown .option-panel {
-        display: block;
+    .selection-column .same-label-color {
+        font-size: 12px;
+        padding: 8px;
     }
 
     .preview-image img {
@@ -611,15 +504,19 @@ body {
         max-height: none;
         overflow: auto;
     }
-    .product-heading{
+        
+    .product-heading {
         font-size: 20px;
     }
-    .product-description{
+        
+    .product-description {
         display: none;
     }
-    .preview-title{
+        
+    .preview-title {
         font-size: 16px;
     }
+        
     .configurator-container {
         overflow: visible;
         flex: none;
@@ -629,20 +526,31 @@ body {
         height: auto;
     }
 
-    .options-scroll-container .option-item {
-        min-width: 160px;
-    }
-
-    /* Removed grid-template-columns to allow horizontal layout */
-    .responsive-selection-dropdown .colors-grid {
-        flex-direction: row;
-    }
-
     .add-to-cart-btn {
         width: 100%;
     }
 
-    .responsive-selection-dropdown {
-        max-height: 40vh;
+    /* ✅ Adjust mobile bottom container height */
+    .mobile-bottom-container {
+        height: 35vh;
+    }
+
+    /* ✅ Better mobile grid layout */
+    .selection-column .colors-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 6px;
+    }
+
+    .selection-column .color-option {
+        min-height: 60px;
+    }
+
+    .selection-column .color-label {
+        font-size: 11px;
+    }
+
+    .selection-column .same-label-color {
+        font-size: 11px;
+        padding: 4px;
     }
 }

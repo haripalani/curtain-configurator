@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const optionItems = document.querySelectorAll('.option-item');
     const optionPanels = document.querySelectorAll('.option-panel');
     const selectionHeading = document.getElementById('selection-heading');
+    const responsiveSelectionHeading = document.getElementById('responsive-selection-heading');
     const productTitle = document.getElementById('product-title');
     const qtyValue = document.getElementById('qty-value');
     const decreaseQtyBtn = document.getElementById('decrease-qty');
@@ -10,11 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const rotateLeftBtn = document.getElementById('rotate-left');
     const rotateRightBtn = document.getElementById('rotate-right');
     const previewImage = document.getElementById('preview-main-image');
-    
-    // Responsive elements
-    const responsiveDropdown = document.getElementById('responsive-dropdown');
-    const responsiveSelectionHeading = document.getElementById('responsive-selection-heading');
-    const responsiveSelectionContent = document.getElementById('responsive-selection-content');
+
+    // Function to check if we're on mobile
+    function isMobile() {
+        return window.innerWidth <= 1023;
+    }
 
     // Function to format color ID for display
     function formatColorLabel(colorId) {
@@ -23,8 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return formattedLabel;
     }
 
-    // Color Data Configuration
-   const colorData = {
+  const colorData = {
         // Curtain colors for "zijgordijnen"
         curtainColors: [
             { id: '01 CREME', imgSrc: './Assets/Colors/Curtain color/01 Creme.png' },
@@ -180,7 +180,6 @@ document.addEventListener('DOMContentLoaded', function () {
             { id: '12 Black', imgSrc: './Assets/Colors/Curtain color/12 Black.png' }
         ]
     };
-
     // Image rotation functionality
     const viewAngles = ['FrontView', 'SideView', 'BackView', 'AngleView'];
     let currentViewIndex = 0;
@@ -197,6 +196,36 @@ document.addEventListener('DOMContentLoaded', function () {
         'kussen-voor': '01 CREME',
         'kussen-achter': '01 CREME'
     };
+
+    // Modified option click handler - centralized logic for both desktop and mobile
+    function handleOptionClick(optionElement, optionType) {
+        // Remove active class from all options
+        document.querySelectorAll('.option-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Add active class to clicked option
+        optionElement.classList.add('active');
+        
+        // Update selection heading
+        const title = optionElement.querySelector('.option-title').textContent;
+        document.getElementById('selection-heading').textContent = title;
+        document.getElementById('responsive-selection-heading').textContent = title;
+        
+        // Hide all option panels
+        document.querySelectorAll('.option-panel').forEach(panel => {
+            panel.style.display = 'none';
+        });
+        
+        // Show the selected option panel
+        const targetPanel = document.getElementById(`${optionType}-options`);
+        if (targetPanel) {
+            targetPanel.style.display = 'block';
+        }
+        
+        // ✅ Removed: No longer show/hide dropdown on mobile
+        // The selection column is now always visible on mobile
+    }
 
     // Helper function to create a special color option element
     function createSpecialOption(colorId, isSelected = false) {
@@ -229,124 +258,6 @@ document.addEventListener('DOMContentLoaded', function () {
         colorDiv.appendChild(colorLabel);
 
         return colorDiv;
-    }
-
-    // Helper function to create a special color option element for responsive dropdown
-    function createResponsiveSpecialOption(colorId, isSelected = false) {
-        const colorDiv = document.createElement('div');
-        colorDiv.className = `color-option ${isSelected ? 'selected' : ''}`;
-        colorDiv.setAttribute('data-color', colorId);
-
-        const sameLabel = document.createElement('div');
-        sameLabel.className = 'same-label-color';
-        sameLabel.textContent = colorId;
-        colorDiv.appendChild(sameLabel);
-        
-        return colorDiv;
-    }
-
-    // Helper function to create a color option element for responsive dropdown
-    function createResponsiveColorOption(colorId, imgSrc, isSelected = false) {
-        const colorDiv = document.createElement('div');
-        colorDiv.className = `color-option ${isSelected ? 'selected' : ''}`;
-        colorDiv.setAttribute('data-color', colorId);
-
-        const img = document.createElement('img');
-        img.src = imgSrc;
-        img.alt = colorId;
-        colorDiv.appendChild(img);
-
-        const colorLabel = document.createElement('div');
-        colorLabel.className = 'color-label';
-        colorLabel.textContent = formatColorLabel(colorId);
-        colorDiv.appendChild(colorLabel);
-
-        return colorDiv;
-    }
-
-    // Function to populate responsive dropdown with list-style options
-    function populateResponsiveColorOptions(container, colors, optionType) {
-        container.innerHTML = '';
-        
-        colors.forEach(color => {
-            const isSelected = color.id === selectedOptions[optionType];
-            let colorDiv;
-            
-            if (color.special) {
-                colorDiv = createResponsiveSpecialOption(color.id, isSelected);
-            } else {
-                colorDiv = createResponsiveColorOption(color.id, color.imgSrc, isSelected);
-            }
-            
-            container.appendChild(colorDiv);
-        });
-    }
-
-    // Function to copy content to responsive dropdown
-    function updateResponsiveDropdownContent(optionType, optionTitle) {
-        responsiveSelectionHeading.textContent = optionTitle;
-        
-        // Clear previous content
-        responsiveSelectionContent.innerHTML = '';
-        
-        // Create the appropriate content based on option type
-        if (optionType === 'haakband') {
-            const fixedDiv = document.createElement('div');
-            fixedDiv.className = 'fixed-selection';
-            fixedDiv.textContent = 'Vaste optie: 225 CM';
-            responsiveSelectionContent.appendChild(fixedDiv);
-        } else {
-            // Create colors container for list-style display
-            const colorsContainer = document.createElement('div');
-            colorsContainer.className = 'colors-grid';
-            
-            // Populate based on option type
-            switch(optionType) {
-                case 'zijgordijnen':
-                    populateResponsiveColorOptions(colorsContainer, colorData.curtainColors, optionType);
-                    break;
-                case 'rand':
-                    populateResponsiveColorOptions(colorsContainer, colorData.trimColors, optionType);
-                    break;
-                case 'ophangband':
-                    populateResponsiveColorOptions(colorsContainer, colorData.ophangbandColors, optionType);
-                    break;
-                case 'voorraamband':
-                    populateResponsiveColorOptions(colorsContainer, colorData.voorraamBandColors, optionType);
-                    break;
-                case 'franjes':
-                    populateResponsiveColorOptions(colorsContainer, colorData.franjesOptions, optionType);
-                    break;
-                case 'booggordijn':
-                    populateResponsiveColorOptions(colorsContainer, colorData.booggordijnColors, optionType);
-                    break;
-                case 'kussen-voor':
-                    populateResponsiveColorOptions(colorsContainer, colorData.kussenVoorColors, optionType);
-                    break;
-                case 'kussen-achter':
-                    populateResponsiveColorOptions(colorsContainer, colorData.kussenAchterColors, optionType);
-                    break;
-                default:
-                    break;
-            }
-            
-            responsiveSelectionContent.appendChild(colorsContainer);
-        }
-    }
-
-    // Function to show responsive dropdown
-    function showResponsiveDropdown() {
-        responsiveDropdown.classList.add('show');
-    }
-
-    // Function to hide responsive dropdown
-    function hideResponsiveDropdown() {
-        responsiveDropdown.classList.remove('show');
-    }
-
-    // Check if we're in responsive mode
-    function isResponsiveMode() {
-        return window.innerWidth < 1024;
     }
 
     // Dynamically populate color options
@@ -435,36 +346,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Option item click handlers
-    optionItems.forEach(item => {
-        item.addEventListener('click', function () {
-            // Remove active class from all option items (both desktop and responsive)
-            document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('active'));
-            
-            // Add active class to all matching option items
-            const optionType = this.getAttribute('data-option');
-            document.querySelectorAll(`[data-option="${optionType}"]`).forEach(opt => {
-                opt.classList.add('active');
-            });
-
-            const optionTitle = this.querySelector('.option-title').textContent;
-
-            // Update desktop view
-            if (!isResponsiveMode()) {
-                optionPanels.forEach(panel => panel.style.display = 'none');
-                const targetPanel = document.getElementById(`${optionType}-options`);
-                if (targetPanel) {
-                    targetPanel.style.display = 'block';
-                }
-
-                if (selectionHeading) {
-                    selectionHeading.textContent = optionTitle;
-                }
-            } else {
-                // Update responsive dropdown content and show it
-                updateResponsiveDropdownContent(optionType, optionTitle);
-                showResponsiveDropdown();
-            }
+    // Handle desktop option clicks (works for both desktop and mobile now)
+    document.querySelectorAll('.options-column > .option-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const optionType = this.dataset.option;
+            handleOptionClick(this, optionType);
         });
     });
     
@@ -492,19 +378,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         if (optionType === 'zijgordijnen') {
                             updateProductTitle();
                         }
-
-                        // Hide responsive dropdown after selection
-                        if (isResponsiveMode()) {
-                            hideResponsiveDropdown();
-                        }
                     }
                 }
             }
-        }
-        // Hide dropdown when clicking outside
-        else if (isResponsiveMode() && !e.target.closest('.responsive-selection-dropdown') && 
-                 !e.target.closest('.option-item')) {
-            hideResponsiveDropdown();
         }
     });
     
@@ -525,10 +401,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Handle window resize
+    // Handle window resize to ensure proper layout
     window.addEventListener('resize', function() {
-        if (!isResponsiveMode()) {
-            hideResponsiveDropdown();
+        // Force re-render of active states on resize
+        const activeOption = document.querySelector('.options-column > .option-item.active');
+        if (activeOption) {
+            const optionType = activeOption.dataset.option;
+            handleOptionClick(activeOption, optionType);
         }
     });
     
